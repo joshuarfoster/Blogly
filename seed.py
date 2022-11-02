@@ -1,5 +1,5 @@
 
-from models import User, db
+from models import User, db, Post
 from app import app
 
 
@@ -35,3 +35,23 @@ with app.app_context():
 # Commit--otherwise, this never gets saved!
     db.session.commit()
 
+# Add posts
+    hello1 = Post(title='Hello',content='Hello',user_id=1)
+    hello2 = Post(title='Hello',content='Hello',user_id=2)
+    hello3 = Post(title='Hello',content='Hello',user_id=3)
+    hello4 = Post(title='Hello',content='Hello',user_id=4)
+    hello5 = Post(title='Hello',content='Hello',user_id=5)
+    hello6 = Post(title='Hello',content='Hello',user_id=6)
+    hello7 = Post(title='Hello',content='Hello',user_id=7)
+
+# Add new objects to session, so they'll persist
+    db.session.add(hello1)
+    db.session.add(hello2)
+    db.session.add(hello3)
+    db.session.add(hello4)
+    db.session.add(hello5)
+    db.session.add(hello6)
+    db.session.add(hello7)
+
+# Commit--otherwise, this never gets saved!
+    db.session.commit()
