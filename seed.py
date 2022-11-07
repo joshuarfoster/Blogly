@@ -12,7 +12,7 @@ with app.app_context():
     db.create_all()
 
 # If table isn't empty, empty it
-    User.query.delete()
+    # User.query.delete()
 
 # Add users
     Harry = User(first_name='Harry', last_name='Potter', image_url='https://tse2.mm.bing.net/th?id=OIP.T9QOfpzhvjIzDQEAf5WE-wHaEK&pid=Api&P=0')
