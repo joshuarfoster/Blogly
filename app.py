@@ -144,5 +144,19 @@ def create_tag():
 @app.route('/tags/<int:tag_id>/delete', methods =['POST'])
 def delete_tag(tag_id):
     tag = Tag.query.filter_by(id=tag_id).delete()
-    db.commit()
+    db.session.commit()
     return redirect('/tags')
+
+@app.route('/tags/<int:tag_id>/edit')
+def show_edit_tag_form(tag_id):
+    """Shows edit tag form"""
+    tag = Tag.query.get_or_404(tag_id)
+    return render_template('edit_tag.html',tag = tag)
+
+@app.route('/tags/<int:tag_id>/edit', methods=['POST'])
+def edit_tag(tag_id):
+    tag = Tag.query.get_or_404(tag_id)
+    name=request.form['name']
+    tag.name = name
+    db.session.commit()
+    return redirect(f'/tags/{tag.id}')
