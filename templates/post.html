@@ -6,6 +6,10 @@
 <h1>{{post.title}}</h1>
 <p>{{post.content}}</p>
 <h3>By {{user.first_name }} {{user.last_name}}</h3>
+<h4>Tags</h4>
+{% for tag in tags %}
+<p>{{tag.name}}</p>
+{% endfor %}
 <form action='/users/{{user.id}}'>
     <input type="submit" value="Cancel">
 </form>
@@ -15,4 +19,5 @@
 <form action='/posts/{{post.id}}/delete' method='POST'>
     <input type="submit" value="Delete">
 </form>
+
 {% endblock %}

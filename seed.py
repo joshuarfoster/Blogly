@@ -1,5 +1,5 @@
 
-from models import User, db, Post
+from models import User, db, Post, Tag, PostTag
 from app import app
 
 
@@ -35,14 +35,31 @@ with app.app_context():
 # Commit--otherwise, this never gets saved!
     db.session.commit()
 
+# Add tags
+    intro = Tag(name='Intro')
+    fun = Tag(name='Fun')
+    sad = Tag(name='Sad')
+    angry = Tag(name='Angry')
+    inspo = Tag(name='Inspo')
+
+# Add new objects to session, so they'll persist
+    db.session.add(intro)
+    db.session.add(fun)
+    db.session.add(sad)
+    db.session.add(angry)
+    db.session.add(inspo)
+
+# Commit--otherwise, this never gets saved!
+    db.session.commit()
+
 # Add posts
-    hello1 = Post(title='Hello',content='Hello',user_id=1)
-    hello2 = Post(title='Hello',content='Hello',user_id=2)
-    hello3 = Post(title='Hello',content='Hello',user_id=3)
-    hello4 = Post(title='Hello',content='Hello',user_id=4)
-    hello5 = Post(title='Hello',content='Hello',user_id=5)
-    hello6 = Post(title='Hello',content='Hello',user_id=6)
-    hello7 = Post(title='Hello',content='Hello',user_id=7)
+    hello1 = Post(title='Hello',content="Hello, I'm Harry and I'll defeat Voldemort for sure",user_id=1)
+    hello2 = Post(title='Howdy',content="Howdy partner",user_id=2)
+    hello3 = Post(title='My Goal',content="I am here to preserve the Union!!!",user_id=3)
+    hello4 = Post(title='Homesick',content='I miss Prim',user_id=4)
+    hello5 = Post(title='New Song',content='Check out my new single',user_id=5)
+    hello6 = Post(title='Show tonight',content='Putting on a show tonight',user_id=6)
+    hello7 = Post(title='Book Signing',content='Come to my book signing at the library',user_id=7)
 
 # Add new objects to session, so they'll persist
     db.session.add(hello1)
@@ -52,6 +69,35 @@ with app.app_context():
     db.session.add(hello5)
     db.session.add(hello6)
     db.session.add(hello7)
+
+# Commit--otherwise, this never gets saved!
+    db.session.commit()
+
+# Add posts_tags
+    tag1 = PostTag(post_id=1,tag_id=1)
+    tag2 = PostTag(post_id=1,tag_id=5)
+    tag3 = PostTag(post_id=2,tag_id=1)
+    tag4 = PostTag(post_id=2,tag_id=2)
+    tag5 = PostTag(post_id=3,tag_id=5)
+    tag6 = PostTag(post_id=3,tag_id=4)
+    tag7 = PostTag(post_id=4,tag_id=3)
+    tag8 = PostTag(post_id=5,tag_id=2)
+    tag9 = PostTag(post_id=6,tag_id=2)
+    tag10 = PostTag(post_id=7,tag_id=5)
+    tag11 = PostTag(post_id=7,tag_id=2)
+
+# Add new objects to session, so they'll persist
+    db.session.add(tag1)
+    db.session.add(tag2)
+    db.session.add(tag3)
+    db.session.add(tag4)
+    db.session.add(tag5)
+    db.session.add(tag6)
+    db.session.add(tag7)
+    db.session.add(tag8)
+    db.session.add(tag9)
+    db.session.add(tag10)
+    db.session.add(tag11)
 
 # Commit--otherwise, this never gets saved!
     db.session.commit()

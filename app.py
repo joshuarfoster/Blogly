@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, request, redirect, render_template
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag, PostTag
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
 
@@ -78,7 +78,8 @@ def delete_user(user_id):
 def show_post(post_id):
     post = Post.query.get_or_404(post_id)
     user = User.query.get_or_404(post.user_id)
-    return render_template('post.html', user = user, post = post)
+    tags = post.tags
+    return render_template('post.html', user = user, post = post, tags = tags)
 
 @app.route('/users/<int:user_id>/posts/new')
 def show_new_post_form(user_id):
@@ -109,10 +110,39 @@ def edit_post(post_id):
     db.session.commit()
     return redirect(f'/posts/{post.id}')
 
-@app.route('/posts/<int:post_id>/delete', methods=['post'])
+@app.route('/posts/<int:post_id>/delete', methods=['POST'])
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     user_id=post.user_id
     post = Post.query.filter_by(id=post_id).delete()
     db.session.commit()
     return redirect(f'/users/{user_id}')
+
+@app.route('/tags')
+def show_tags():
+    tags =  Tag.query.all()
+    return render_template('tags.html', tags = tags)
+
+@app.route('/tags/<int:tag_id>')
+def show_tag_with_posts(tag_id):
+    tag= Tag.query.get_or_404(tag_id)
+    posts = tag.posts
+    return render_template('tag.html', tag=tag, posts=posts)
+
+@app.route('/tags/new')
+def show_new_tag_form():
+    return render_template('create_tag.html')
+
+@app.route('/tags/new', methods = ['POST'])
+def create_tag():
+    name=request.form['name']
+    tag = Tag(name=name)
+    db.session.add(tag)
+    db.session.commit()
+    return redirect('/tags')
+
+@app.route('/tags/<int:tag_id>/delete', methods =['POST'])
+def delete_tag(tag_id):
+    tag = Tag.query.filter_by(id=tag_id).delete()
+    db.commit()
+    return redirect('/tags')
